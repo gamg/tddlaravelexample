@@ -13,4 +13,10 @@ class Author extends Model
     {
         return $this->hasMany(Book::class);
     }
+
+    // Accessor
+    public function getNameAttribute($value): string
+    {
+        return strtoupper($value);
+    }
 }
