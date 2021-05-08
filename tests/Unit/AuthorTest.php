@@ -21,8 +21,16 @@ class AuthorTest extends TestCase
 
     public function test_get_name_in_uppercase()
     {
-        $author = Author::factory()->create(['name' => 'Nuevo NOMBRE']);
+        $author = Author::factory()->create(['name' => 'New NAME']);
 
-        $this->assertEquals('NUEVO NOMBRE', $author->name);
+        $this->assertEquals('NEW NAME', $author->name);
+    }
+
+    public function test_save_name_without_spaces()
+    {
+        $author = Author::factory()->create(['name' => '   New NAME  ']);
+
+        $this->assertEquals('NEW NAME', $author->name);
+        $this->assertDatabaseHas('authors', ['name' => 'new name']);
     }
 }
