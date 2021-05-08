@@ -19,4 +19,10 @@ class Author extends Model
     {
         return strtoupper($value);
     }
+
+    // Mutator
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = trim(strtolower($value));
+    }
 }
