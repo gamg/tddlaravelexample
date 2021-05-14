@@ -25,7 +25,8 @@ class BookFactory extends Factory
         return [
             'author_id' => function(){
                 return Author::factory()->create()->id;
-            }
+            },
+            'title' => $this->faker->title
         ];
     }
 }

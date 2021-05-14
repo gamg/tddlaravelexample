@@ -18,4 +18,19 @@ class BookTest extends TestCase
 
         $this->assertInstanceOf(Author::class, $book->author);
     }
+
+    public function test_get_title_in_uppercase()
+    {
+        $book = Book::factory()->create(['title' => 'New Book Title']);
+
+        $this->assertEquals('NEW BOOK TITLE', $book->title);
+    }
+
+    public function test_save_title_without_spaces()
+    {
+        $book = Book::factory()->create(['title' => ' New book TItle ']);
+
+        $this->assertEquals('NEW BOOK TITLE', $book->title);
+        $this->assertDatabaseHas('books', ['title' => 'new book title']);
+    }
 }
