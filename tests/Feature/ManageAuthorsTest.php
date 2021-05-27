@@ -38,4 +38,17 @@ class ManageAuthorsTest extends TestCase
                 ->assertSee('AUTHOR 3')
                 ->assertViewHas('authors');
     }
+
+    public function test_if_authors_list_is_empty()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('authors.index'));
+
+        $response->assertStatus(200)
+            ->assertSee('Authors list')
+            ->assertSee('There is not data to show')
+            ->assertViewHas('authors');
+    }
 }
