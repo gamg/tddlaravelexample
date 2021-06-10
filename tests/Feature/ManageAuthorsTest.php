@@ -51,4 +51,30 @@ class ManageAuthorsTest extends TestCase
             ->assertSee('There is not data to show')
             ->assertViewHas('authors');
     }
+
+    public function test_create_author()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get(route('authors.create'));
+
+        $response->assertStatus(200)
+            ->assertSee('Create Author');
+    }
+
+    public function test_store_author()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $fields = Author::factory()->raw(['name' => 'Adolfo']);
+
+        $response = $this->post(route('authors.store'), $fields);
+
+        $response->assertRedirect(route('authors.create'))
+            ->assertSessionHas('status', 'Author registered successfully');
+
+        $this->assertDatabaseHas('authors', ['name' => 'adolfo']);
+    }
 }
