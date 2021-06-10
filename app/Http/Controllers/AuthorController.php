@@ -26,7 +26,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
     /**
@@ -37,7 +37,10 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Author::create($request->all());
+
+        return redirect()->route('authors.create')
+                ->with('status', 'Author registered successfully');
     }
 
     /**
