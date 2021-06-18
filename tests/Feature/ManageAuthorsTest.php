@@ -70,7 +70,8 @@ class ManageAuthorsTest extends TestCase
 
         $fields = Author::factory()->raw(['name' => 'Adolfo']);
 
-        $response = $this->post(route('authors.store'), $fields);
+        $response = $this->from(route('authors.create'))
+                    ->post(route('authors.store'), $fields);
 
         $response->assertRedirect(route('authors.create'))
             ->assertSessionHas('status', 'Author registered successfully');
