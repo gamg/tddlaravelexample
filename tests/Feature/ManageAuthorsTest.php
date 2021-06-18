@@ -78,4 +78,18 @@ class ManageAuthorsTest extends TestCase
 
         $this->assertDatabaseHas('authors', ['name' => 'adolfo']);
     }
+
+    public function test_store_author_with_required_name()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $fields = Author::factory()->raw(['name' => '']);
+
+        $response = $this->from(route('authors.create'))
+            ->post(route('authors.store'), $fields);
+
+        $response->assertStatus(302)
+            ->assertSessionHasErrors('name');
+    }
 }
